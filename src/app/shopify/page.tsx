@@ -1,13 +1,11 @@
 import Image from "next/image";
 import Link from "next/link";
 import React, { use } from "react";
+import prisma from "~/lib/prisma";
 
 const Page = () => {
-  const users = use(
-    fetch("https://cdn.dungpv.id.vn/databases/app.json").then((res) =>
-      res.json()
-    )
-  );
+  const users = use(prisma.user.findMany());
+  console.log("users____", users);
 
   return (
     <div className="font-sans grid grid-rows-[20px_1fr_20px] items-center justify-items-center min-h-screen p-8 pb-20 gap-16 sm:p-20">

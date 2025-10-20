@@ -1,21 +1,12 @@
 import Image from "next/image";
 import Link from "next/link";
 import { use } from "react";
+import prisma from "~/lib/prisma";
 
 const Page = () => {
-  const users = use(
-    fetch("https://dungpv.id.vn/api/users").then((res) => res.json())
-  ) as {
-    id: string;
-    name: string;
-    email: string;
-    image: string;
-    provider: string;
-    createdAt: string;
-    updatedAt: string;
-  }[];
+  const users = use(prisma.user.findMany());
 
-  console.log("users", users);
+  console.log("users___>>>", users);
 
   return (
     <div className="font-sans grid grid-rows-[20px_1fr_20px] items-center justify-items-center min-h-screen p-8 pb-20 gap-16 sm:p-20">
@@ -39,7 +30,7 @@ const Page = () => {
                 <div className="flex gap-1.5 items-center">
                   <Image
                     className="dark:invert rounded-sm"
-                    src={user.image}
+                    src={user.image!}
                     alt="user image"
                     width={40}
                     height={40}
@@ -56,10 +47,10 @@ const Page = () => {
                   </code>
 
                   <code className="bg-black/[.05] dark:bg-white/[.06] font-mono font-semibold px-1 py-0.5 rounded">
-                    {user.createdAt}
+                    {user.createdAt.toISOString()}
                   </code>
                   <code className="bg-black/[.05] dark:bg-white/[.06] font-mono font-semibold px-1 py-0.5 rounded">
-                    {user.updatedAt}
+                    {user.updatedAt.toISOString()}
                   </code>
                 </div>
               </div>
