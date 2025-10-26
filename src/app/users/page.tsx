@@ -2,48 +2,15 @@ import Image from "next/image";
 import Link from "next/link";
 import { use } from "react";
 import prisma from "~/lib/prisma";
-import { create } from "./actions";
+import User from "./user";
 
 const Page = () => {
   const users = use(prisma.user.findMany());
 
-  console.log("users__>", users);
-
   return (
     <div className="font-sans grid grid-rows-[20px_1fr_20px] items-center justify-items-center min-h-screen p-8 pb-20 gap-16 sm:p-20">
       <main className="flex flex-col gap-[32px] row-start-2 items-center sm:items-start">
-        <form
-          action={async () => {
-            "use server";
-
-            await create({
-              name: "John",
-              email: crypto.randomUUID() + "@gmail.com",
-              image: "https://cdn.dungpv.id.vn/images/pro-img-1.png",
-              provider: "google",
-              createdAt: new Date(),
-              updatedAt: new Date(),
-              id: crypto.randomUUID(),
-            });
-          }}
-        >
-          <button
-          // onClick={async () => {
-          //   await create({
-          //     name: "John",
-          //     email: "john@gmail.com",
-          //     image: "https://cdn.dungpv.id.vn/images/pro-img-1.png",
-          //     provider: "google",
-          //     createdAt: new Date(),
-          //     updatedAt: new Date(),
-          //     id: "123",
-          //   });
-          // }}
-          >
-            create user
-          </button>
-        </form>
-
+        <User />
         <Image
           className="dark:invert"
           src="./next.svg"
